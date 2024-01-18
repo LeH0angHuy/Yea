@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock, Paper, Scissors Game</title>
+    <style>
+        body {
+            display: flex;
+            height: 100vh;
+            margin: 0;
+            align-items: center;
+            justify-content: center;
+            font-family: Arial, sans-serif;
+            flex-direction: column;
+            background-color: #000; /* Set background color to black */
+            overflow: hidden;
+        }
+
+        #topLine,
+        #bottomLine {
+            width: 100%;
+            height: 1px;
+            background-color: #000; /* Set line color to black */
+        }
+
+        #container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+        }
+
+        .side {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        #kaiDaisy {
+            background-color: #3498db; /* Blue background color */
+            color: #fff; /* White text color */
+        }
+
+        #joe {
+            background-color: #e74c3c; /* Red background color */
+            color: #fff; /* White text color */
+        }
+
+        #startButtonContainer {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #27ae60; /* Green box background color */
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        #startButton {
+            font-size: 20px;
+            color: #fff; /* White text color */
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        #result {
+            font-size: 20px;
+            margin-top: 20px;
+            text-align: center;
+            color: #fff; /* White text color */
+        }
+
+        #winningWords {
+            font-size: 40px; /* Increased font size */
+            font-weight: bold;
+            color: #fff; /* White text color */
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        #scores {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            margin-top: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div id="topLine"></div>
+
+    <div id="container">
+        <div id="kaiDaisy" class="side">
+            <h2>Kai</h2>
+            <div id="kaiDaisyScore">Score: 0</div>
+        </div>
+        <div id="joe" class="side">
+            <h2>Daisy</h2>
+            <div id="joeScore">Score: 0</div>
+        </div>
+    </div>
+
+    <div id="startButtonContainer">
+        <div id="startButton" onclick="startGame()">Start</div>
+    </div>
+
+    <div id="result"></div>
+    <div id="winningWords"></div>
+    <div id="scores">Kai: 0 | Daisy: 0</div>
+
+    <script>
+        let kaiWins = 0;
+        let daisyWins = 0;
+
+        function startGame() {
+            var kaiChoice = getRandomChoice();
+            var daisyChoice = getRandomChoice();
+
+            var result = determineWinner(kaiChoice, daisyChoice);
+
+            displayResult(result);
+            setWhiteText(result);
+            updateScores(result);
+        }
+
+        function getRandomChoice() {
+            var choices = ["rock", "paper", "scissors"];
+            var randomIndex = Math.floor(Math.random() * choices.length);
+            return choices[randomIndex];
+        }
+
+        function determineWinner(player1, player2) {
+            if (player1 === player2) {
+                return "It's a tie!";
+            } else if (
+                (player1 === "rock" && player2 === "scissors") ||
+                (player1 === "paper" && player2 === "rock") ||
+                (player1 === "scissors" && player2 === "paper")
+            ) {
+                kaiWins++;
+                return "Kai wins!";
+            } else {
+                daisyWins++;
+                return "Daisy wins!";
+            }
+        }
+
+        function displayResult(result) {
+            document.getElementById("result").innerHTML = result;
+        }
+
+        function setWhiteText(text) {
+            document.getElementById("winningWords").innerHTML = text;
+        }
+
+        function updateScores(result) {
+            document.getElementById("kaiDaisyScore").innerHTML = "Score: " + kaiWins;
+            document.getElementById("joeScore").innerHTML = "Score: " + daisyWins;
+            document.getElementById("scores").innerHTML = "Kai: " + kaiWins + " | Daisy: " + daisyWins;
+        }
+    </script>
+</body>
+</html>
